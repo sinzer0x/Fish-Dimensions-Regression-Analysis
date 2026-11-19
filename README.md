@@ -1,3 +1,35 @@
+# Fish-Dimensions-Regression-Analysis (Платформа FishGrow)
+
+Проект разведочного анализа данных (ЛР №1) и построения воспроизводимого конвейера регрессии массы рыбы с трекингом экспериментов в MLflow (ЛР №2).
+
+## Структура репозитория
+* `data/processed/fish_checked.csv` — очищенный и размеченный датасет (исключена запись с `Weight = 0`).
+* `src/features.py` — кастомный трансформер генерации геометрического объёма `VolumeAdder`.
+* `src/train.py` — обучение моделей (эксперименты `E0`–`E4`), кросс-валидация, логирование в MLflow и экспорт лучшей модели.
+* `src/evaluate.py` — оценка сохранённой модели на замороженной тестовой выборке и диагностика ошибок.
+* `src/bootstrap.py` — построение 95% доверительных и предиктивных интервалов методом бутстрэпа ($B=500$).
+* `notebooks/02-error-analysis.ipynb` — визуализация остатков и сравнение интервалов неопределённости.
+* `tests/` — модульные тесты схемы данных и ML-конвейера (`pytest`).
+* `models/best_model.joblib` и `models/model-card.md` — сериализованный пайплайн лучшей модели и её паспорт.
+* `reports/lab02-report.md` — итоговый отчёт по лабораторной работе №2.
+
+## Команды запуска
+
+1. **Обучение всех экспериментов (E0–E4) и запись в MLflow:**
+   ```bash
+   python -m src.train
+2. **Просмотр журнала экспериментов в веб-интерфейсе MLflow:**
+   ```bash
+   mlflow ui --backend-store-uri sqlite:///mlflow.db
+3. **Оценка лучшей модели и вывод статистики ошибок на тесте:**
+   ```bash
+   python -m src.evaluate
+4. **Расчёт доверительных и предиктивных интервалов (бутстрэп):**
+   ```bash
+   python -m src.bootstrap
+5. **Запуск автотестов:**
+   ```bash
+   pytest -v
 # Fish Dimensions Regression Analysis
 
 ### Introduction
@@ -14,6 +46,26 @@ A Dash web application has been created on Heroku servers to demonstrate the lin
 **Please allow roughly 30 seconds for the server to boot up when clicking the link below**
 
 The interactive web application can be found [Here](https://fish-market-dataset-analysis.herokuapp.com/)
+
+## Лабораторная работа №1: воспроизводимый EDA
+
+Датасет находится в `assets/data/Fish.csv`, интерактивные графики и автоматический HTML-отчёт — в `reports/`.
+
+```powershell
+pipenv sync
+pipenv run python run.py
+```
+
+Откройте `notebooks/01-eda.ipynb` в VS Code, выберите Python-интерпретатор Pipenv-окружения как ядро и выполните ячейки сверху вниз. Чтобы открыть Jupyter Notebook из этого окружения, используйте `pipenv run jupyter notebook`.
+
+Для пересборки HTML-отчёта и запуска проверок из корня репозитория выполните:
+
+```powershell
+pipenv run python -m src.generate_html_report
+pipenv run python -m unittest discover -s tests -v
+```
+
+HTML-отчёт записывается в `reports/eda_report.html`. Контракт полей задан в `src/fish_schema.json`, а проверки таблицы реализованы в `src/data_checks.py`.
 
 # Overview of Statistical Analysis on Dataset
 
