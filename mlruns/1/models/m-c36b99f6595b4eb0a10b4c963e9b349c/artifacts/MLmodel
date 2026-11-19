@@ -1,0 +1,23 @@
+artifact_path: file:D:/programming/ai/Fish-Dimensions-Regression-Analysis/mlruns/1/models/m-c36b99f6595b4eb0a10b4c963e9b349c/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.2
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.9.1
+    skops_trusted_types: null
+mlflow_version: 3.18.0
+model_id: m-c36b99f6595b4eb0a10b4c963e9b349c
+model_size_bytes: 3020
+model_uuid: m-c36b99f6595b4eb0a10b4c963e9b349c
+prompts: null
+run_id: 97b885c6ed9b43c2b768ac8eafc1c351
+utc_time_created: '2026-11-18 17:22:43.075903'
